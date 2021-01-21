@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
 import { IMatch, ISuggestion } from "../interfaces/IMatch";
-import { getColourForMatch, IMatchTypeToColourMap } from "../utils/decoration";
+import { IMatchTypeToColourMap } from "../utils/decoration";
 import MatchSnippet from "./MatchSnippet";
 import { ArrowDropUp, ArrowDropDown } from "@material-ui/icons";
 import { getHtmlFromMarkdown } from "../utils/dom";
 import SidebarMatchContainer from "./SidebarMatchContainer";
+import { getSidebarMatchStyles } from "./SidebarMatch";
 
 interface IProps {
   matchGroup: Array<IMatch<ISuggestion>>;
@@ -38,10 +39,6 @@ const SidebarMatchGroup = ({
     setIsOpen(!isOpen);
   };
 
-  const color = matchColours
-    ? getColourForMatch(firstMatch, matchColours, false).borderColour
-    : undefined;
-
   const getTitleText = (): string => {
     if (isOpen) {
       return "Click to hide all matches for this rule";
@@ -62,7 +59,7 @@ const SidebarMatchGroup = ({
     <li className="Sidebar__list-item">
       <SidebarMatchContainer
         className="SidebarMatch__group-container"
-        style={{ borderLeft: `2px solid ${color}` }}
+        css={getSidebarMatchStyles(firstMatch, matchColours)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={toggleOpen}

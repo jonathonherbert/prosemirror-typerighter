@@ -1,6 +1,5 @@
 import {
   createDecorationsForMatch,
-  defaultMatchColours,
   getMatchType,
   MatchType
 } from "../decoration";
@@ -20,9 +19,8 @@ describe("Decoration utils", () => {
           to: 5,
           type: {
             attrs: {
-              class: "MatchDecoration",
-              "data-match-id": "0-from:0-to:5--match-0",
-              style: `background-color: ${defaultMatchColours.default}07; border-bottom: 2px solid ${defaultMatchColours.default}${defaultMatchColours.defaultOpacity}`
+              class: "MatchDecoration MatchDecoration--default",
+              "data-match-id": "0-from:0-to:5--match-0"
             },
             spec: {
               categoryId: "1",
@@ -43,9 +41,8 @@ describe("Decoration utils", () => {
           to: 5,
           type: {
             attrs: {
-              class: "MatchDecoration",
-              "data-match-id": "0-from:0-to:5--match-0",
-              style: `background-color: ${defaultMatchColours.correct}07; border-bottom: 2px solid ${defaultMatchColours.correct}${defaultMatchColours.correctOpacity}`
+              class: "MatchDecoration MatchDecoration--is-correct",
+              "data-match-id": "0-from:0-to:5--match-0"
             },
             spec: {
               categoryId: "1",

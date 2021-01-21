@@ -1,11 +1,18 @@
 import React, { useContext, memo } from "react";
 
 import { IMatch } from "../interfaces/IMatch";
-import { IMatchTypeToColourMap, getColourForMatch } from "../utils/decoration";
+import {
+  IMatchTypeToColourMap,
+  getColourForMatch,
+  getMatchType,
+  MatchType
+} from "../utils/decoration";
 import TelemetryContext from "../contexts/TelemetryContext";
 import SidebarMatchContainer from "./SidebarMatchContainer";
 import { createScrollToRangeHandler } from "../utils/component";
 import Markdown from "./Markdown";
+import { css, SerializedStyles } from "@emotion/react";
+import { getSquiggleAsUri } from "../utils/squiggle";
 
 interface IProps {
   match: IMatch;
@@ -17,6 +24,56 @@ interface IProps {
   editorScrollElement: Element;
   getScrollOffset: () => number;
 }
+
+export const getSidebarMatchStyles = (
+  match: IMatch,
+  matchColours?: IMatchTypeToColourMap
+): SerializedStyles => {
+  const matchType = getMatchType(match);
+  const color = matchColours
+    ? getColourForMatch(match, matchColours, false).borderColour
+    : "";
+
+  switch (matchType) {
+    case MatchType.CORRECT:
+      return css`
+        &:after {
+          position: absolute;
+          width: 2px;
+          content: "";
+          left: 0px;
+          top: 0px;
+          height: 100%;
+          background-image: repeating-linear-gradient(
+            to top,
+            ${color} 0,
+            ${color} 3px,
+            transparent 3px,
+            transparent 5px
+          );
+          background-size: 2px 5px;
+        }
+      `;
+    case MatchType.DEFAULT:
+      return css`
+        &:after {
+          position: absolute;
+          width: 4px;
+          content: "";
+          left: 0px;
+          bottom: 0px;
+          height: 100%;
+          background-repeat: repeat-y;
+          background-position: top;
+          background-image: url('${getSquiggleAsUri(color, 'VERTICAL')}');
+        }
+      `;
+    case MatchType.HAS_REPLACEMENT:
+      return css`
+        border-left: 2px solid ${color};
+      `;
+  }
+};
 
 /**
  * Display information for a single match
@@ -31,12 +88,7 @@ const SidebarMatch = ({
   editorScrollElement,
   getScrollOffset
 }: React.PropsWithChildren<IProps>) => {
-
   const { telemetryAdapter } = useContext(TelemetryContext);
-
-  const color = matchColours
-    ? getColourForMatch(match, matchColours, false).borderColour
-    : undefined;
 
   const scrollToRange = createScrollToRangeHandler(
     match,
@@ -56,7 +108,7 @@ const SidebarMatch = ({
   return (
     <li className="Sidebar__list-item">
       <SidebarMatchContainer
-        style={{ borderLeft: `2px solid ${color}` }}
+        css={getSidebarMatchStyles(match, matchColours)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={scrollToRange}

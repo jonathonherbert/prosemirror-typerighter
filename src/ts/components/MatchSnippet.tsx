@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { IMatch } from "..";
 import SidebarMatchContainer from "./SidebarMatchContainer";
-import { getColourForMatch, IMatchTypeToColourMap } from "../utils/decoration";
+import { IMatchTypeToColourMap } from "../utils/decoration";
 import { createScrollToRangeHandler } from "../utils/component";
 import TelemetryContext from "../contexts/TelemetryContext";
+import { getSidebarMatchStyles } from "./SidebarMatch";
 
 interface IProps {
   match: IMatch;
@@ -52,15 +53,11 @@ const MatchSnippet = ({
     telemetryAdapter
   );
 
-  const color = matchColours
-    ? getColourForMatch(match, matchColours, false).borderColour
-    : undefined;
-
   return (
     <>
       <li className="Sidebar__list-item SidebarMatch__subset-list">
         <SidebarMatchContainer
-          style={{ borderLeft: `2px solid ${color}` }}
+          css={getSidebarMatchStyles(match, matchColours)}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onClick={scrollToRange}

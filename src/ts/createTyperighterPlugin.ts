@@ -13,7 +13,8 @@ import {
 import {
   IMatchTypeToColourMap,
   defaultMatchColours,
-  maybeGetDecorationMatchIdFromEvent
+  maybeGetDecorationMatchIdFromEvent,
+  createGlobalDecorationStyleTag
 } from "./utils/decoration";
 import { EditorView } from "prosemirror-view";
 import { Plugin, Transaction, EditorState } from "prosemirror-state";
@@ -231,10 +232,14 @@ const createTyperighterPlugin = <TFilterState, TMatch extends IMatch>(
       }
     },
     view(view) {
+      // Prepend any globally available styles to the document editor.
+      const globalPluginStyleTag = createGlobalDecorationStyleTag(matchColours);
+      view.dom.parentNode?.insertBefore(globalPluginStyleTag, view.dom)
       return {
         // Update our store with the new state.
-        update: _ =>
+        update: _ => {
           store.emit(STORE_EVENT_NEW_STATE, plugin.getState(view.state))
+        }
       };
     }
   });

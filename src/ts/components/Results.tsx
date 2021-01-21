@@ -121,14 +121,14 @@ const Results = <TPluginState extends IPluginState<MatchType[]>>({
               matchColours={pluginState.config.matchColours}
             />
           )}
-          {contactHref && (
-            <div className="Sidebar__header-contact">
-              <a href={contactHref} target="_blank">
-                Issue with Typerighter? Let us know!
-              </a>
-            </div>
-          )}
         </div>
+        {contactHref && (
+          <div className="Sidebar__header-contact">
+            <a href={contactHref} target="_blank">
+              Issue with Typerighter? Let us know!
+            </a>
+          </div>
+        )}
         {loadingBarVisible && (
           <div
             className="LoadingBar"

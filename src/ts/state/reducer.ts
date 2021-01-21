@@ -193,7 +193,7 @@ export const createInitialState = <
     },
     decorations: DecorationSet.create(
       doc,
-      createDecorationsForMatches(matches, matchColours)
+      createDecorationsForMatches(matches)
     ),
     dirtiedRanges: [],
     currentMatches: [] as TMatch[],
@@ -444,7 +444,6 @@ const createHandleNewFocusState = <TPluginState extends IPluginState>(
       tr.doc,
       createDecorationsForMatch(
         output,
-        state.config.matchColours,
         hoverData.isSelected
       )
     );
@@ -688,10 +687,7 @@ const handleMatchesRequestSuccess = (ignoreMatch: IIgnoreMatchPredicate) => <
   currentMatches = removeOverlappingRanges(currentMatches, state.dirtiedRanges);
 
   // Create our decorations for the newly current matches.
-  const newDecorations = createDecorationsForMatches(
-    mappedMatchesToAdd,
-    state.config.matchColours
-  );
+  const newDecorations = createDecorationsForMatches(mappedMatchesToAdd);
 
   // Amend the block queries in flight to remove the returned blocks and categories
   const newBlockQueriesInFlight = requestsInFlight.reduce(

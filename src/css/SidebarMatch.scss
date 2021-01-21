@@ -1,4 +1,5 @@
 .SidebarMatch__container {
+  position: relative;
   padding: $gutter-width;
   &:hover {
     background-color: #f6f6f6;

@@ -18,8 +18,7 @@ import { createReducer, IPluginState } from "../reducer";
 import {
   createDebugDecorationFromRange,
   getNewDecorationsForCurrentMatches,
-  createDecorationsForMatch,
-  defaultMatchColours
+  createDecorationsForMatch
 } from "../../utils/decoration";
 import { expandRangesToParentBlockNode } from "../../utils/range";
 import { createDoc, p } from "../../test/helpers/prosemirror";
@@ -509,14 +508,14 @@ describe("Action handlers", () => {
         currentMatches: [output],
         decorations: new DecorationSet().add(
           tr.doc,
-          createDecorationsForMatch(output, defaultMatchColours, false)
+          createDecorationsForMatch(output, false)
         )
       };
       expect(reducer(tr, localState, newHoverIdReceived("match-id", 1))).toEqual({
         ...localState,
         decorations: new DecorationSet().add(
           tr.doc,
-          createDecorationsForMatch(output, defaultMatchColours, true)
+          createDecorationsForMatch(output, true)
         ),
         hoverId: "match-id",
         hoverRectIndex: 1,
@@ -545,7 +544,7 @@ describe("Action handlers", () => {
       const localState = {
         ...state,
         decorations: new DecorationSet().add(tr.doc, [
-          ...createDecorationsForMatch(output, defaultMatchColours, true)
+          ...createDecorationsForMatch(output, true)
         ]),
         currentMatches: [output],
         hoverId: "match-id",
@@ -556,7 +555,7 @@ describe("Action handlers", () => {
       ).toEqual({
         ...localState,
         decorations: new DecorationSet().add(tr.doc, [
-          ...createDecorationsForMatch(output, defaultMatchColours, false)
+          ...createDecorationsForMatch(output, false)
         ]),
         hoverId: undefined,
         hoverRectIndex: undefined,
@@ -593,8 +592,7 @@ describe("Action handlers", () => {
         decorations: getNewDecorationsForCurrentMatches(
           currentMatches,
           state.decorations,
-          defaultDoc,
-          defaultMatchColours
+          defaultDoc
         )
       };
       expect(
