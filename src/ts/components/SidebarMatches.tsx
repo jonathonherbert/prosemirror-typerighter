@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { space } from "@guardian/src-foundations";
+import { body } from "@guardian/src-foundations/typography";
 import { chain } from "lodash";
 import React from "react";
 import { IMatch } from "..";
@@ -110,11 +111,12 @@ const SidebarMatches = ({
                           align-items: center;
                         `}
                       >
-                        {iconMap[matchType].render(true)}
+                        {iconMap[matchType].renderOnLight()}
                       </div>
                       <span
                         css={css`
-                          padding-left: ${space[1]}px;
+                          ${body.medium()}
+                          padding-left: ${space[2]}px;
                           line-height: 30px;
                         `}
                       >

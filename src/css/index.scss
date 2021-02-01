@@ -95,6 +95,10 @@ hr {
   outline: none;
 }
 
+.MatchDecoration--is-transparent {
+  background-color: transparent !important;
+}
+
 .TyperighterPlugin__overlay {
   position: absolute;
   top: 0;

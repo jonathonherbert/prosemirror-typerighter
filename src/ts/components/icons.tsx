@@ -49,15 +49,18 @@ export const tickIcon = (colour: string) => (
 
 export const iconMap = {
   CORRECT: {
-    render: (dark = false) => tickIcon(dark ? "white" : "black"),
-    description: "These matches are correct"
+    render: (colour = "#121212") => tickIcon(colour),
+    renderOnLight: () => tickIcon("white"),
+    description: "Correct"
   },
   HAS_REPLACEMENT: {
-    render: (dark = false) => warningIcon(dark ? "white" : "black"),
-    description: "These matches are incorrect"
+    render: (colour = "#121212") => warningIcon(colour),
+    renderOnLight: () => warningIcon("white"),
+    description: "Revise"
   },
   DEFAULT: {
-    render: (dark = false) => infoIcon(dark ? "white" : "black"),
-    description: "These matches are worth checking"
+    render: (colour = "#121212") => infoIcon(colour),
+    renderOnLight: () => infoIcon("#121212"),
+    description: "Review"
   }
 };

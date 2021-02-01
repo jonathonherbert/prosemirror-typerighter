@@ -65,8 +65,18 @@ const FilterResults = ({ filterState, applyFilterState, matches }: IProps) => {
               disabled={cannotAddFilter && !isDisabled}
               onClick={toggleFilterValue}
               label={
-                <span className={DecorationClassMap[matchType]}>
-                  <span>{iconMap[matchType].render()}</span>
+                <span
+                  className={`${DecorationClassMap[matchType]} MatchDecoration--is-transparent`}
+                >
+                  <span
+                    css={css`
+                      margin-right: ${space[1]}px;
+                      display: inline-block;
+                      vertical-align: middle;
+                    `}
+                  >
+                    {iconMap[matchType].render()}
+                  </span>
                   {`(${noMatchesOfThisType})`}
                 </span>
               }

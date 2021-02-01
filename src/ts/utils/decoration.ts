@@ -1,3 +1,4 @@
+import { brandAlt, error, success } from "@guardian/src-foundations";
 import flatten from "lodash/flatten";
 import { Node } from "prosemirror-model";
 import { Decoration, DecorationSet } from "prosemirror-view";
@@ -20,11 +21,11 @@ export interface IMatchTypeToColourMap {
 }
 
 export const defaultMatchColours = {
-  hasSuggestion: "#d90000",
+  hasSuggestion: error[400],
   hasSuggestionOpacity: "FF",
-  default: "#ffa500",
+  default: brandAlt[200],
   defaultOpacity: "AD",
-  correct: "#228816",
+  correct: success[400],
   correctOpacity: "FF"
 };
 
